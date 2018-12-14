@@ -20,11 +20,11 @@ public class GameState {
     private Bitmap BmChessPieces;
     private int BmTileSize;
 
-    private int xTilePrevious = 0;
-    private int yTilePrevious = 0;
+    private int xTilePrevious = 8;
+    private int yTilePrevious = 8;
     private int currentX = 0;
     private int currentY = 0;
-    private char currentPiece = ' ';
+    private boolean whitesTurn = true;
 
     private char board[][] = { // 8*8 chess board
             {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
@@ -64,10 +64,8 @@ public class GameState {
             double xTile = floor((event.getY()) / tileSize);
             xTilePrevious = (int) xTile;
             yTilePrevious = (int) yTile;
-            currentPiece = board[(int) xTile][(int) yTile];
             currentX = (int) event.getX();
             currentY = (int) event.getY();
-            board[(int) xTile][(int) yTile] = ' ';
         }
         else if (event.getAction() == MotionEvent.ACTION_MOVE) {
             currentX = (int) event.getX();
@@ -76,14 +74,14 @@ public class GameState {
         else if (event.getAction() == MotionEvent.ACTION_UP) {
             double yTile = floor((event.getX()) / tileSize);
             double xTile = floor((event.getY()) / tileSize);
-            if (legalMove(xTilePrevious, yTilePrevious, (int) xTile, (int) yTile, board, currentPiece)) {
-                board[(int) xTile][(int) yTile] = currentPiece;
+            if (RuleEngine.checkLegal(board, whitesTurn, xTilePrevious, yTilePrevious, (int) xTile, (int) yTile)) {
+                board[(int) xTile][(int) yTile] = board[xTilePrevious][yTilePrevious];
+                board[xTilePrevious][yTilePrevious] = ' ';
                 board = flipBoard(board);
+                whitesTurn = !whitesTurn;
             }
-            else {
-                board[xTilePrevious][yTilePrevious] = currentPiece;
-            }
-            currentPiece = ' ';
+            xTilePrevious = 8;
+            yTilePrevious = 8;
         }
         return true;
     }
@@ -98,6 +96,7 @@ public class GameState {
                 else paint = darkPaint;
                 Rect currentSquare = new Rect((j * tileSize), (i * tileSize), ((j + 1) * tileSize), ((i + 1) * tileSize));
                 canvas.drawRect(currentSquare, paint);
+                if ((xTilePrevious == i) && (yTilePrevious == j)) continue;
                 switch (board[i][j]) {
                     case 'K':
                         canvas.drawBitmap(BmChessPieces, new Rect(0, 0, BmTileSize, BmTileSize), currentSquare, null);
@@ -140,45 +139,47 @@ public class GameState {
                 }
             }
         }
-        switch (currentPiece) {
-            case 'K':
-                canvas.drawBitmap(BmChessPieces, new Rect(0, 0, BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
-                break;
-            case 'Q':
-                canvas.drawBitmap(BmChessPieces, new Rect(BmTileSize, 0, 2 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
-                break;
-            case 'B':
-                canvas.drawBitmap(BmChessPieces, new Rect(2 * BmTileSize, 0, 3 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
-                break;
-            case 'N':
-                canvas.drawBitmap(BmChessPieces, new Rect(3 * BmTileSize, 0, 4 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
-                break;
-            case 'R':
-                canvas.drawBitmap(BmChessPieces, new Rect(4 * BmTileSize, 0, 5 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
-                break;
-            case 'P':
-                canvas.drawBitmap(BmChessPieces, new Rect(5 * BmTileSize, 0, 6 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
-                break;
-            case 'k':
-                canvas.drawBitmap(BmChessPieces, new Rect(6 * BmTileSize, 0, 7 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
-                break;
-            case 'q':
-                canvas.drawBitmap(BmChessPieces, new Rect(7 * BmTileSize, 0, 8 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
-                break;
-            case 'b':
-                canvas.drawBitmap(BmChessPieces, new Rect(8 * BmTileSize, 0, 9 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
-                break;
-            case 'n':
-                canvas.drawBitmap(BmChessPieces, new Rect(9 * BmTileSize, 0, 10 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
-                break;
-            case 'r':
-                canvas.drawBitmap(BmChessPieces, new Rect(10 * BmTileSize, 0, 11 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
-                break;
-            case 'p':
-                canvas.drawBitmap(BmChessPieces, new Rect(11 * BmTileSize, 0, 12 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
-                break;
-            default:
-                break;
+        if ((xTilePrevious < 8) && (yTilePrevious < 8)) {
+            switch (board[xTilePrevious][yTilePrevious]) {
+                case 'K':
+                    canvas.drawBitmap(BmChessPieces, new Rect(0, 0, BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    break;
+                case 'Q':
+                    canvas.drawBitmap(BmChessPieces, new Rect(BmTileSize, 0, 2 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    break;
+                case 'B':
+                    canvas.drawBitmap(BmChessPieces, new Rect(2 * BmTileSize, 0, 3 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    break;
+                case 'N':
+                    canvas.drawBitmap(BmChessPieces, new Rect(3 * BmTileSize, 0, 4 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    break;
+                case 'R':
+                    canvas.drawBitmap(BmChessPieces, new Rect(4 * BmTileSize, 0, 5 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    break;
+                case 'P':
+                    canvas.drawBitmap(BmChessPieces, new Rect(5 * BmTileSize, 0, 6 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    break;
+                case 'k':
+                    canvas.drawBitmap(BmChessPieces, new Rect(6 * BmTileSize, 0, 7 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    break;
+                case 'q':
+                    canvas.drawBitmap(BmChessPieces, new Rect(7 * BmTileSize, 0, 8 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    break;
+                case 'b':
+                    canvas.drawBitmap(BmChessPieces, new Rect(8 * BmTileSize, 0, 9 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    break;
+                case 'n':
+                    canvas.drawBitmap(BmChessPieces, new Rect(9 * BmTileSize, 0, 10 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    break;
+                case 'r':
+                    canvas.drawBitmap(BmChessPieces, new Rect(10 * BmTileSize, 0, 11 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    break;
+                case 'p':
+                    canvas.drawBitmap(BmChessPieces, new Rect(11 * BmTileSize, 0, 12 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -189,14 +190,6 @@ public class GameState {
     void setChessBitmap(Bitmap bm) {
         BmChessPieces = bm;
         BmTileSize = bm.getHeight();
-    }
-
-    private boolean legalMove(int x1, int y1, int x2, int y2, char[][] board, char currentPiece) {
-        if (board[x2][y2] == 'k' || board[x2][y2] == 'K') return false;
-        if (currentPiece == ' ') return false;
-        if (x1 == x2 && y1 == y2) return false;
-        if (x2 >= 8 || y2 >= 8 || x2 < 0 || y2 < 0) return false;
-        return true;
     }
 
     private char[][] flipBoard(char[][] board) {

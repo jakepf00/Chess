@@ -1,5 +1,6 @@
 package com.jakepf00.chess;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -12,6 +13,7 @@ import android.view.View;
 public class GameView extends SurfaceView implements Callback {
     private GameThread thread;
 
+    @SuppressLint("ClickableViewAccessibility")
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
