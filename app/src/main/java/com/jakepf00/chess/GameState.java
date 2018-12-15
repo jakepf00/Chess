@@ -79,6 +79,9 @@ public class GameState {
                 board[xTilePrevious][yTilePrevious] = ' ';
                 board = flipBoard(board);
                 whitesTurn = !whitesTurn;
+                board = ChessAI.makeMove(board, whitesTurn);
+                board = flipBoard(board);
+                whitesTurn = !whitesTurn;
             }
             xTilePrevious = 8;
             yTilePrevious = 8;
