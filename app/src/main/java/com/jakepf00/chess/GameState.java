@@ -26,7 +26,7 @@ public class GameState {
     private int currentY = 0;
     private boolean whitesTurn = true;
 
-    private char board[][] = { // 8*8 chess board
+    private char board[][] = {
             {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
             {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -41,6 +41,11 @@ public class GameState {
     GameState() {
         lightPaint.setARGB(255, 255, 255, 255);
         darkPaint.setARGB(255, 0, 0, 0);
+
+        //whitesTurn = true;
+        //board = ChessAI.makeMove(board, whitesTurn);
+        //whitesTurn = !whitesTurn;
+        //board = flipBoard(board);
     }
 
     boolean update() {
