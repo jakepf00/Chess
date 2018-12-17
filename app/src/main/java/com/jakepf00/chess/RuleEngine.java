@@ -139,4 +139,10 @@ class RuleEngine {
         }
         return newBoard;
     }
+
+    static char[][] makeMove(char[][] board, Move move) {
+        board[move.x2][move.y2] = board[move.x1][move.y1];
+        board[move.x1][move.y1] = ' ';
+        return board;
+    }
 }

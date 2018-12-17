@@ -79,11 +79,12 @@ public class GameState {
         else if (event.getAction() == MotionEvent.ACTION_UP) {
             double yTile = floor((event.getX()) / tileSize);
             double xTile = floor((event.getY()) / tileSize);
-            if (RuleEngine.checkLegal(board, whitesTurn, new Move(xTilePrevious, yTilePrevious, (int) xTile, (int) yTile))) {
-                board[(int) xTile][(int) yTile] = board[xTilePrevious][yTilePrevious];
-                board[xTilePrevious][yTilePrevious] = ' ';
-                board = RuleEngine.flipBoard(board);
+            Move move = new Move(xTilePrevious, yTilePrevious, (int) xTile, (int) yTile);
+            if (RuleEngine.checkLegal(board, whitesTurn, move)) {
+                board = RuleEngine.makeMove(board, move);
+
                 whitesTurn = !whitesTurn;
+                board = RuleEngine.flipBoard(board);
                 board = ChessAI.makeMove(board, whitesTurn);
                 board = RuleEngine.flipBoard(board);
                 whitesTurn = !whitesTurn;
