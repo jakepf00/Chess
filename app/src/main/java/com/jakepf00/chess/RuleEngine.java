@@ -145,4 +145,14 @@ class RuleEngine {
         board[move.x1][move.y1] = ' ';
         return board;
     }
+
+    static char[][] copyBoard(char[][] board) {
+        char[][] copy = new char[8][8];
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                copy[i][j] = board[i][j];
+            }
+        }
+        return copy;
+    }
 }
