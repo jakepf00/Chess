@@ -82,10 +82,10 @@ public class GameState {
             if (RuleEngine.checkLegal(board, whitesTurn, xTilePrevious, yTilePrevious, (int) xTile, (int) yTile)) {
                 board[(int) xTile][(int) yTile] = board[xTilePrevious][yTilePrevious];
                 board[xTilePrevious][yTilePrevious] = ' ';
-                board = flipBoard(board);
+                board = RuleEngine.flipBoard(board);
                 whitesTurn = !whitesTurn;
                 board = ChessAI.makeMove(board, whitesTurn);
-                board = flipBoard(board);
+                board = RuleEngine.flipBoard(board);
                 whitesTurn = !whitesTurn;
             }
             xTilePrevious = 8;
@@ -198,15 +198,5 @@ public class GameState {
     void setChessBitmap(Bitmap bm) {
         BmChessPieces = bm;
         BmTileSize = bm.getHeight();
-    }
-
-    private char[][] flipBoard(char[][] board) {
-        char[][] newBoard = new char[8][8];
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                newBoard[i][j] = board[7 - i][7 - j];
-            }
-        }
-        return newBoard;
     }
 }
