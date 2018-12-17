@@ -15,7 +15,7 @@ class ChessAI {
                     if (isUpperCase(board[i][j])) {
                         for (int k = 0; k < 8; k++) {
                             for (int l = 0; l < 8; l++) {
-                                if (RuleEngine.checkLegal(board, whitesTurn, i, j, k, l)) {
+                                if (RuleEngine.checkLegal(board, whitesTurn, new Move(i, j, k, l))) {
                                     possibleMoves.add(new Move(i, j, k, l));
                                 }
                             }
@@ -34,7 +34,7 @@ class ChessAI {
                     if (isLowerCase(board[i][j])) {
                         for (int k = 0; k < 8; k++) {
                             for (int l = 0; l < 8; l++) {
-                                if (RuleEngine.checkLegal(board, whitesTurn, i, j, k, l)) {
+                                if (RuleEngine.checkLegal(board, whitesTurn, new Move(i, j, k, l))) {
                                     possibleMoves.add(new Move(i, j, k, l));
                                 }
                             }

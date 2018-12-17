@@ -4,7 +4,12 @@ import static java.lang.Character.isLowerCase;
 import static java.lang.Character.isUpperCase;
 
 class RuleEngine {
-    static boolean checkLegal(char[][] board, boolean whitesTurn, int x1, int y1, int x2, int y2) {
+    static boolean checkLegal(char[][] board, boolean whitesTurn, Move move) {
+        int x1 = move.x1;
+        int y1 = move.y1;
+        int x2 = move.x2;
+        int y2 = move.y2;
+
         // Basic checks that apply to all pieces
         if (x1 == x2 && y1 == y2) return false; // Can't move to the same square
         if (x2 >= 8 || y2 >= 8 || x2 < 0 || y2 < 0) return false; // Can't play outside of the board
