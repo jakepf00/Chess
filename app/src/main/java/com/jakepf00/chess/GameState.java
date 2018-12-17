@@ -83,11 +83,7 @@ public class GameState {
             if (RuleEngine.checkLegal(board, whitesTurn, move)) {
                 board = RuleEngine.makeMove(board, move);
 
-                whitesTurn = !whitesTurn;
-                board = RuleEngine.flipBoard(board);
-                board = ChessAI.makeMove(board, whitesTurn);
-                board = RuleEngine.flipBoard(board);
-                whitesTurn = !whitesTurn;
+                board = RuleEngine.flipBoard(ChessAI.makeMove(RuleEngine.flipBoard(board), !whitesTurn));
             }
             xTilePrevious = 8;
             yTilePrevious = 8;
@@ -196,6 +192,7 @@ public class GameState {
         screenWidth = min(width, height);
         tileSize = screenWidth / 8;
     }
+
     void setChessBitmap(Bitmap bm) {
         BmChessPieces = bm;
         BmTileSize = bm.getHeight();
