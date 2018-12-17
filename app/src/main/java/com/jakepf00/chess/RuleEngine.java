@@ -21,6 +21,13 @@ class RuleEngine {
         if (isLowerCase(pieceToMove) && isLowerCase(targetSquare)) return false;
         if (pieceToMove == ' ') return false; // Can't move a blank square
 
+        // Check for check
+        if (!whitesTurn) {
+            if (blackInCheck(board, move)) return false;
+        } else {
+            if (whiteInCheck(board, move)) return false;
+        }
+
         // Piece specific checks
         return pieceMove(board, move);
     }
@@ -72,7 +79,7 @@ class RuleEngine {
             case 'q':
                 return queenMove(board, move);
             default:
-                return true;
+                return false;
         }
     }
     private static boolean pawnMove(char[][] board, Move move) {
@@ -161,5 +168,52 @@ class RuleEngine {
     }
     private static boolean queenMove(char[][] board, Move move) {
         return (rookMove(board, move) || bishopMove(board, move));
+    }
+
+    private static boolean blackInCheck(char[][] board, Move move) {
+        char[][] boardCopy = copyBoard(board);
+        boardCopy = makeMove(boardCopy, move);
+        boardCopy = flipBoard(boardCopy);
+        int kingX = 0;
+        int kingY = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (boardCopy[i][j] == 'k') {
+                    kingX = i;
+                    kingY = j;
+                }
+            }
+        }
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (isUpperCase(boardCopy[i][j])) {
+                    if (pieceMove(boardCopy, new Move(i, j, kingX, kingY))) return true;
+                }
+            }
+        }
+        return false;
+    }
+    private static boolean whiteInCheck(char[][] board, Move move) {
+        char[][] boardCopy = copyBoard(board);
+        boardCopy = makeMove(boardCopy, move);
+        boardCopy = flipBoard(boardCopy);
+        int kingX = 0;
+        int kingY = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (boardCopy[i][j] == 'K') {
+                    kingX = i;
+                    kingY = j;
+                }
+            }
+        }
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (isLowerCase(boardCopy[i][j])) {
+                    if (pieceMove(boardCopy, new Move(i, j, kingX, kingY))) return true;
+                }
+            }
+        }
+        return false;
     }
 }
