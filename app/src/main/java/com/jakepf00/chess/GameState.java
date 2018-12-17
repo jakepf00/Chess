@@ -150,40 +150,40 @@ public class GameState {
         if ((xTilePrevious < 8) && (yTilePrevious < 8)) {
             switch (board[xTilePrevious][yTilePrevious]) {
                 case 'K':
-                    canvas.drawBitmap(BmChessPieces, new Rect(0, 0, BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    canvas.drawBitmap(BmChessPieces, new Rect(0, 0, BmTileSize, BmTileSize), new Rect(currentX - (tileSize / 2), currentY - (tileSize / 2), currentX + (tileSize / 2), currentY + (tileSize / 2)), null);
                     break;
                 case 'Q':
-                    canvas.drawBitmap(BmChessPieces, new Rect(BmTileSize, 0, 2 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    canvas.drawBitmap(BmChessPieces, new Rect(BmTileSize, 0, 2 * BmTileSize, BmTileSize), new Rect(currentX - (tileSize / 2), currentY - (tileSize / 2), currentX + (tileSize / 2), currentY + (tileSize / 2)), null);
                     break;
                 case 'B':
-                    canvas.drawBitmap(BmChessPieces, new Rect(2 * BmTileSize, 0, 3 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    canvas.drawBitmap(BmChessPieces, new Rect(2 * BmTileSize, 0, 3 * BmTileSize, BmTileSize), new Rect(currentX - (tileSize / 2), currentY - (tileSize / 2), currentX + (tileSize / 2), currentY + (tileSize / 2)), null);
                     break;
                 case 'N':
-                    canvas.drawBitmap(BmChessPieces, new Rect(3 * BmTileSize, 0, 4 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    canvas.drawBitmap(BmChessPieces, new Rect(3 * BmTileSize, 0, 4 * BmTileSize, BmTileSize), new Rect(currentX - (tileSize / 2), currentY - (tileSize / 2), currentX + (tileSize / 2), currentY + (tileSize / 2)), null);
                     break;
                 case 'R':
-                    canvas.drawBitmap(BmChessPieces, new Rect(4 * BmTileSize, 0, 5 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    canvas.drawBitmap(BmChessPieces, new Rect(4 * BmTileSize, 0, 5 * BmTileSize, BmTileSize), new Rect(currentX - (tileSize / 2), currentY - (tileSize / 2), currentX + (tileSize / 2), currentY + (tileSize / 2)), null);
                     break;
                 case 'P':
-                    canvas.drawBitmap(BmChessPieces, new Rect(5 * BmTileSize, 0, 6 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    canvas.drawBitmap(BmChessPieces, new Rect(5 * BmTileSize, 0, 6 * BmTileSize, BmTileSize), new Rect(currentX - (tileSize / 2), currentY - (tileSize / 2), currentX + (tileSize / 2), currentY + (tileSize / 2)), null);
                     break;
                 case 'k':
-                    canvas.drawBitmap(BmChessPieces, new Rect(6 * BmTileSize, 0, 7 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    canvas.drawBitmap(BmChessPieces, new Rect(6 * BmTileSize, 0, 7 * BmTileSize, BmTileSize), new Rect(currentX - (tileSize / 2), currentY - (tileSize / 2), currentX + (tileSize / 2), currentY + (tileSize / 2)), null);
                     break;
                 case 'q':
-                    canvas.drawBitmap(BmChessPieces, new Rect(7 * BmTileSize, 0, 8 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    canvas.drawBitmap(BmChessPieces, new Rect(7 * BmTileSize, 0, 8 * BmTileSize, BmTileSize), new Rect(currentX - (tileSize / 2), currentY - (tileSize / 2), currentX + (tileSize / 2), currentY + (tileSize / 2)), null);
                     break;
                 case 'b':
-                    canvas.drawBitmap(BmChessPieces, new Rect(8 * BmTileSize, 0, 9 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    canvas.drawBitmap(BmChessPieces, new Rect(8 * BmTileSize, 0, 9 * BmTileSize, BmTileSize), new Rect(currentX - (tileSize / 2), currentY - (tileSize / 2), currentX + (tileSize / 2), currentY + (tileSize / 2)), null);
                     break;
                 case 'n':
-                    canvas.drawBitmap(BmChessPieces, new Rect(9 * BmTileSize, 0, 10 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    canvas.drawBitmap(BmChessPieces, new Rect(9 * BmTileSize, 0, 10 * BmTileSize, BmTileSize), new Rect(currentX - (tileSize / 2), currentY - (tileSize / 2), currentX + (tileSize / 2), currentY + (tileSize / 2)), null);
                     break;
                 case 'r':
-                    canvas.drawBitmap(BmChessPieces, new Rect(10 * BmTileSize, 0, 11 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    canvas.drawBitmap(BmChessPieces, new Rect(10 * BmTileSize, 0, 11 * BmTileSize, BmTileSize), new Rect(currentX - (tileSize / 2), currentY - (tileSize / 2), currentX + (tileSize / 2), currentY + (tileSize / 2)), null);
                     break;
                 case 'p':
-                    canvas.drawBitmap(BmChessPieces, new Rect(11 * BmTileSize, 0, 12 * BmTileSize, BmTileSize), new Rect(currentX - (BmTileSize / 2), currentY - (BmTileSize / 2), currentX + (BmTileSize / 2), currentY + (BmTileSize / 2)), null);
+                    canvas.drawBitmap(BmChessPieces, new Rect(11 * BmTileSize, 0, 12 * BmTileSize, BmTileSize), new Rect(currentX - (tileSize / 2), currentY - (tileSize / 2), currentX + (tileSize / 2), currentY + (tileSize / 2)), null);
                     break;
                 default:
                     break;
