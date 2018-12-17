@@ -42,10 +42,13 @@ class ChessAI {
                     }
                 }
             }
-            Move move = possibleMoves.get(new Random().nextInt(possibleMoves.size()));
-            board[move.x2][move.y2] = board[move.x1][move.y1];
-            board[move.x1][move.y1] = ' ';
-            return board;
+            if (possibleMoves.size() > 0) {
+                Move move = possibleMoves.get(new Random().nextInt(possibleMoves.size()));
+                board[move.x2][move.y2] = board[move.x1][move.y1];
+                board[move.x1][move.y1] = ' ';
+                return board;
+            }
+            else return board;
         }
     }
 }
