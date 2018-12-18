@@ -3,8 +3,6 @@ package com.jakepf00.chess;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static com.jakepf00.chess.RuleEngine.countMaterialBlack;
-import static com.jakepf00.chess.RuleEngine.countMaterialWhite;
 import static java.lang.Character.isLowerCase;
 import static java.lang.Character.isUpperCase;
 
@@ -21,8 +19,10 @@ class ChessAI {
                                     Move move = new Move(i, j, k, l);
                                     char[][] boardCopy = RuleEngine.copyBoard(board);
                                     boardCopy = RuleEngine.makeMove(boardCopy, move);
-                                    move.score -= countMaterialWhite(boardCopy);
-                                    move.score += countMaterialBlack(boardCopy);
+                                    move.score -= RuleEngine.countMaterialWhite(boardCopy);
+                                    move.score += RuleEngine.countMaterialBlack(boardCopy);
+                                    move.score -= RuleEngine.boardPositionWhite(boardCopy);
+                                    move.score += RuleEngine.boardPositionBlack(boardCopy);
                                     possibleMoves.add(move);
                                 }
                             }
@@ -48,8 +48,10 @@ class ChessAI {
                                     Move move = new Move(i, j, k, l);
                                     char[][] boardCopy = RuleEngine.copyBoard(board);
                                     boardCopy = RuleEngine.makeMove(boardCopy, move);
-                                    move.score += countMaterialWhite(boardCopy);
-                                    move.score -= countMaterialBlack(boardCopy);
+                                    move.score += RuleEngine.countMaterialWhite(boardCopy);
+                                    move.score -= RuleEngine.countMaterialBlack(boardCopy);
+                                    move.score += RuleEngine.boardPositionWhite(boardCopy);
+                                    move.score -= RuleEngine.boardPositionBlack(boardCopy);
                                     possibleMoves.add(move);
                                 }
                             }

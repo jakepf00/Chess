@@ -273,4 +273,122 @@ class RuleEngine {
         }
         return score;
     }
+
+    static int boardPositionWhite(char[][] board) {
+        int score = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                switch (board[i][j]) {
+                    case 'P':
+                        score += pawnPositionScore[i][j];
+                        break;
+                    case 'K':
+                        score += kingPositionScore[i][j];
+                        break;
+                    case 'R':
+                        score += rookPositionScore[i][j];
+                        break;
+                    case 'N':
+                        score += knightPositionScore[i][j];
+                        break;
+                    case 'B':
+                        score += bishopPositionScore[i][j];
+                        break;
+                    case 'Q':
+                        score += queenPositionScore[i][j];
+                        break;
+                }
+            }
+        }
+        return score;
+    }
+    static int boardPositionBlack(char[][] board) {
+        int score = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                switch (board[i][j]) {
+                    case 'p':
+                        score += pawnPositionScore[i][j];
+                        break;
+                    case 'k':
+                        score += kingPositionScore[i][j];
+                        break;
+                    case 'r':
+                        score += rookPositionScore[i][j];
+                        break;
+                    case 'n':
+                        score += knightPositionScore[i][j];
+                        break;
+                    case 'b':
+                        score += bishopPositionScore[i][j];
+                        break;
+                    case 'q':
+                        score += queenPositionScore[i][j];
+                        break;
+                }
+            }
+        }
+        return score;
+    }
+
+    private static int[][] pawnPositionScore = {
+            {99, 99, 99, 99, 99, 99, 99, 99},
+            {17, 18, 19, 20, 20, 19, 18, 17},
+            {15, 17, 18, 19, 19, 18, 17, 15},
+            {13, 15, 17, 19, 19, 17, 15, 14},
+            {11, 14, 16, 18, 18, 16, 14, 11},
+            { 8,  9, 10, 11, 11, 10,  9,  8},
+            { 5,  6,  7,  8,  8,  7,  6,  5},
+            { 0,  0,  0,  0,  0,  0,  0,  0},
+    };
+    private static char[][] kingPositionScore = {
+            { 0, 20, 25, 15, 15, 25, 20,  0},
+            {20, 25, 20, 10, 10, 20, 25, 20},
+            {15, 20, 15, 10, 10, 15, 20, 15},
+            {10, 15, 10, 12, 12, 10, 15, 10},
+            {10, 15, 10, 12, 12, 10, 15, 10},
+            {15, 20, 15, 10, 10, 15, 20, 15},
+            {20, 25, 20, 10, 10, 20, 25, 20},
+            { 0, 20, 25, 15, 15, 25, 20,  0},
+    };
+    private static char[][] rookPositionScore = {
+            { 5, 10, 15, 20, 20, 15, 10,  5},
+            {10, 13, 16, 20, 20, 16, 13, 10},
+            {15, 19, 23, 27, 27, 23, 19, 15},
+            {17, 22, 27, 32, 32, 27, 22, 17},
+            {17, 22, 27, 32, 32, 27, 22, 17},
+            {15, 19, 23, 27, 27, 23, 19, 15},
+            {10, 13, 16, 20, 20, 16, 13, 10},
+            { 5, 10, 15, 20, 20, 15, 10,  5},
+    };
+    private static char[][] knightPositionScore = {
+            { 0,  5, 10, 15, 15, 10,  5,  0},
+            { 5, 10, 15, 20, 20, 15, 10,  5},
+            {10, 15, 20, 25, 25, 20, 15, 10},
+            {15, 20, 25, 30, 30, 25, 20, 15},
+            {15, 20, 25, 30, 30, 25, 20, 15},
+            {10, 15, 20, 25, 25, 20, 15, 10},
+            { 5, 10, 15, 20, 20, 15, 10,  5},
+            { 0,  5, 10, 15, 15, 10,  5,  0},
+    };
+    private static char[][] bishopPositionScore = {
+            { 0,  5, 10, 15, 15, 10,  5,  0},
+            { 5, 10, 15, 20, 20, 15, 10,  5},
+            {10, 15, 20, 25, 25, 20, 15, 10},
+            {15, 20, 25, 30, 30, 25, 20, 15},
+            {15, 20, 25, 30, 30, 25, 20, 15},
+            {10, 15, 20, 25, 25, 20, 15, 10},
+            { 5, 10, 15, 20, 20, 15, 10,  5},
+            { 0,  5, 10, 15, 15, 10,  5,  0},
+    };
+    private static char[][] queenPositionScore = {
+            { 0,  5, 10, 15, 15, 10,  5,  0},
+            { 5, 10, 15, 20, 20, 15, 10,  5},
+            {10, 15, 20, 25, 25, 20, 15, 10},
+            {15, 20, 25, 30, 30, 25, 20, 15},
+            {15, 20, 25, 30, 30, 25, 20, 15},
+            {10, 15, 20, 25, 25, 20, 15, 10},
+            { 5, 10, 15, 20, 20, 15, 10,  5},
+            { 0,  5, 10, 15, 15, 10,  5,  0},
+    };
 }
