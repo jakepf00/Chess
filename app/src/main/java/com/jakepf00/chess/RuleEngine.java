@@ -48,7 +48,7 @@ class RuleEngine {
         return board;
     }
 
-    private static char[][] copyBoard(char[][] board) {
+    static char[][] copyBoard(char[][] board) {
         char[][] copy = new char[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -215,5 +215,62 @@ class RuleEngine {
             }
         }
         return false;
+    }
+
+    static int countMaterialWhite(char[][] board) {
+        int score = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                switch (board[i][j]) {
+                    case 'P':
+                        score += 1;
+                        break;
+                    case 'K':
+                        score += 20;
+                        break;
+                    case 'R':
+                        score += 5;
+                        break;
+                    case 'N':
+                        score += 3;
+                        break;
+                    case 'B':
+                        score += 3;
+                        break;
+                    case 'Q':
+                        score += 9;
+                        break;
+                }
+            }
+        }
+        return score;
+    }
+    static int countMaterialBlack(char[][] board) {
+        int score = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                switch (board[i][j]) {
+                    case 'p':
+                        score += 1;
+                        break;
+                    case 'k':
+                        score += 20;
+                        break;
+                    case 'r':
+                        score += 5;
+                        break;
+                    case 'n':
+                        score += 3;
+                        break;
+                    case 'b':
+                        score += 3;
+                        break;
+                    case 'q':
+                        score += 9;
+                        break;
+                }
+            }
+        }
+        return score;
     }
 }

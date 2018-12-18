@@ -2,8 +2,9 @@ package com.jakepf00.chess;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
+import static com.jakepf00.chess.RuleEngine.countMaterialBlack;
+import static com.jakepf00.chess.RuleEngine.countMaterialWhite;
 import static java.lang.Character.isLowerCase;
 import static java.lang.Character.isUpperCase;
 
@@ -16,10 +17,12 @@ class ChessAI {
                     if (isUpperCase(board[i][j])) {
                         for (int k = 0; k < 8; k++) {
                             for (int l = 0; l < 8; l++) {
-                                if (RuleEngine.checkLegal(board, whitesTurn, new Move(i, j, k, l))) {
+                                if (RuleEngine.checkLegal(board, true, new Move(i, j, k, l))) {
                                     Move move = new Move(i, j, k, l);
-                                    move.score += i;
-                                    move.score += j;
+                                    char[][] boardCopy = RuleEngine.copyBoard(board);
+                                    boardCopy = RuleEngine.makeMove(boardCopy, move);
+                                    move.score -= countMaterialWhite(boardCopy);
+                                    move.score += countMaterialBlack(boardCopy);
                                     possibleMoves.add(move);
                                 }
                             }
@@ -41,10 +44,12 @@ class ChessAI {
                     if (isLowerCase(board[i][j])) {
                         for (int k = 0; k < 8; k++) {
                             for (int l = 0; l < 8; l++) {
-                                if (RuleEngine.checkLegal(board, whitesTurn, new Move(i, j, k, l))) {
+                                if (RuleEngine.checkLegal(board, false, new Move(i, j, k, l))) {
                                     Move move = new Move(i, j, k, l);
-                                    move.score += i;
-                                    move.score += j;
+                                    char[][] boardCopy = RuleEngine.copyBoard(board);
+                                    boardCopy = RuleEngine.makeMove(boardCopy, move);
+                                    move.score += countMaterialWhite(boardCopy);
+                                    move.score -= countMaterialBlack(boardCopy);
                                     possibleMoves.add(move);
                                 }
                             }
