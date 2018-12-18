@@ -13,10 +13,8 @@ import static java.lang.Math.min;
 public class GameState {
     private Paint lightPaint = new Paint();
     private Paint darkPaint = new Paint();
-
     private int screenWidth = 0;
     private int tileSize = screenWidth / 8;
-
     private Bitmap BmChessPieces;
     private int BmTileSize;
 
@@ -25,8 +23,9 @@ public class GameState {
     private int currentX = 0;
     private int currentY = 0;
     private boolean whitesTurn = true;
+    private boolean playAI = false;
 
-    private char board[][] = {
+    private char[][] board = {
             {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
             {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -35,8 +34,6 @@ public class GameState {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
             {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'}};
-
-
 
     GameState() {
         lightPaint.setARGB(255, 255, 255, 255);
@@ -51,7 +48,6 @@ public class GameState {
     boolean update() {
         return true;
     }
-
     boolean keyPressed(int keyCode) {
         if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
             screenWidth += 8;
@@ -62,7 +58,6 @@ public class GameState {
         tileSize = screenWidth / 8;
         return true;
     }
-
     boolean screenTouched(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             double yTile = floor((event.getX()) / tileSize);
@@ -82,15 +77,18 @@ public class GameState {
             Move move = new Move(xTilePrevious, yTilePrevious, (int) xTile, (int) yTile);
             if (RuleEngine.checkLegal(board, whitesTurn, move)) {
                 board = RuleEngine.makeMove(board, move);
-
-                board = RuleEngine.flipBoard(ChessAI.makeMove(RuleEngine.flipBoard(board), !whitesTurn));
+                if (playAI) {
+                    board = RuleEngine.flipBoard(ChessAI.makeMove(RuleEngine.flipBoard(board), !whitesTurn));
+                } else {
+                    board = RuleEngine.flipBoard(board);
+                    whitesTurn = !whitesTurn;
+                }
             }
             xTilePrevious = 8;
             yTilePrevious = 8;
         }
         return true;
     }
-
     public void draw(Canvas canvas) {
         canvas.drawARGB(0, 0, 0, 0);
 
@@ -192,7 +190,6 @@ public class GameState {
         screenWidth = min(width, height);
         tileSize = screenWidth / 8;
     }
-
     void setChessBitmap(Bitmap bm) {
         BmChessPieces = bm;
         BmTileSize = bm.getHeight();
