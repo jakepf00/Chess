@@ -1,6 +1,7 @@
 package com.jakepf00.chess;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import static java.lang.Character.isLowerCase;
@@ -16,7 +17,10 @@ class ChessAI {
                         for (int k = 0; k < 8; k++) {
                             for (int l = 0; l < 8; l++) {
                                 if (RuleEngine.checkLegal(board, whitesTurn, new Move(i, j, k, l))) {
-                                    possibleMoves.add(new Move(i, j, k, l));
+                                    Move move = new Move(i, j, k, l);
+                                    move.score += i;
+                                    move.score += j;
+                                    possibleMoves.add(move);
                                 }
                             }
                         }
@@ -24,7 +28,8 @@ class ChessAI {
                 }
             }
             if (possibleMoves.size() > 0) {
-                Move move = possibleMoves.get(new Random().nextInt(possibleMoves.size()));
+                Collections.sort(possibleMoves, new SortByScore());
+                Move move = possibleMoves.get(0);
                 board = RuleEngine.makeMove(board, move);
                 return board;
             }
@@ -37,7 +42,10 @@ class ChessAI {
                         for (int k = 0; k < 8; k++) {
                             for (int l = 0; l < 8; l++) {
                                 if (RuleEngine.checkLegal(board, whitesTurn, new Move(i, j, k, l))) {
-                                    possibleMoves.add(new Move(i, j, k, l));
+                                    Move move = new Move(i, j, k, l);
+                                    move.score += i;
+                                    move.score += j;
+                                    possibleMoves.add(move);
                                 }
                             }
                         }
@@ -45,7 +53,8 @@ class ChessAI {
                 }
             }
             if (possibleMoves.size() > 0) {
-                Move move = possibleMoves.get(new Random().nextInt(possibleMoves.size()));
+                Collections.sort(possibleMoves, new SortByScore());
+                Move move = possibleMoves.get(0);
                 board = RuleEngine.makeMove(board, move);
                 return board;
             }
