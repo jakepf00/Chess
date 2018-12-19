@@ -17,6 +17,12 @@ class ChessAI {
                             for (int l = 0; l < 8; l++) {
                                 if (RuleEngine.checkLegal(board, true, new Move(i, j, k, l))) {
                                     Move move = new Move(i, j, k, l);
+                                    char[][] boardCopy = RuleEngine.copyBoard(board);
+                                    boardCopy = RuleEngine.makeMove(boardCopy, move);
+                                    move.score -= RuleEngine.countMaterialWhite(boardCopy);
+                                    move.score += RuleEngine.countMaterialBlack(boardCopy);
+                                    move.score -= RuleEngine.boardPositionWhite(boardCopy);
+                                    move.score += RuleEngine.boardPositionBlack(boardCopy);
                                     possibleMoves.add(move);
                                 }
                             }
@@ -38,6 +44,12 @@ class ChessAI {
                             for (int l = 0; l < 8; l++) {
                                 if (RuleEngine.checkLegal(board, false, new Move(i, j, k, l))) {
                                     Move move = new Move(i, j, k, l);
+                                    char[][] boardCopy = RuleEngine.copyBoard(board);
+                                    boardCopy = RuleEngine.makeMove(boardCopy, move);
+                                    move.score += RuleEngine.countMaterialWhite(boardCopy);
+                                    move.score -= RuleEngine.countMaterialBlack(boardCopy);
+                                    move.score += RuleEngine.boardPositionWhite(boardCopy);
+                                    move.score -= RuleEngine.boardPositionBlack(boardCopy);
                                     possibleMoves.add(move);
                                 }
                             }
