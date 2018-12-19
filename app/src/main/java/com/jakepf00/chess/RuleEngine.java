@@ -50,10 +50,9 @@ class RuleEngine {
 
     static char[][] copyBoard(char[][] board) {
         char[][] copy = new char[8][8];
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                copy[i][j] = board[i][j];
-            }
+        for(int i = 0; i < board.length; i++)
+        {
+            System.arraycopy(board[i], 0, copy[i], 0, board.length);
         }
         return copy;
     }
