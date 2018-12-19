@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -13,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button newGameButton;
     Switch playAISwitch;
+    GameView chessGame;
+    boolean playAI = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
         newGameButton = findViewById(R.id.new_game_button);
         playAISwitch = findViewById(R.id.ai_switch);
+        chessGame = findViewById(R.id.gameView);
+
+        playAISwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                playAI = isChecked;
+            }
+        });
     }
 
     void startNewGame(View v) {
-        Toast toast = Toast.makeText(this, "hey", Toast.LENGTH_LONG);
-        toast.show();
+        chessGame.newGame(playAI);
     }
 }

@@ -48,4 +48,8 @@ public class GameView extends SurfaceView implements Callback {
     public void surfaceDestroyed(SurfaceHolder holder) {
         thread.stop();
     }
+
+    public void newGame(boolean playAI) {
+        thread.getGameState().startNewGame(playAI);
+    }
 }

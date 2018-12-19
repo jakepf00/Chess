@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static java.lang.Math.floor;
 import static java.lang.Math.min;
 
-public class GameState {
+class GameState {
     private Paint lightPaint = new Paint();
     private Paint darkPaint = new Paint();
     private int screenWidth = 0;
@@ -25,9 +25,9 @@ public class GameState {
     private int currentX = 0;
     private int currentY = 0;
     private boolean whitesTurn = true;
-    private boolean playAI = true;
+    private boolean playAI = false;
 
-    private char[][] board = {
+    private char[][] boardStart = {
             {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
             {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -36,6 +36,7 @@ public class GameState {
             {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
             {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
             {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'}};
+    private char[][] board = RuleEngine.copyBoard(boardStart);
 
     GameState() {
         lightPaint.setARGB(255, 255, 255, 255);
@@ -91,7 +92,7 @@ public class GameState {
         }
         return true;
     }
-    public void draw(Canvas canvas) {
+    void draw(Canvas canvas) {
         canvas.drawARGB(0, 0, 0, 0);
 
         for (int i = 0; i < 8; i++) {
@@ -186,6 +187,15 @@ public class GameState {
                     break;
             }
         }
+    }
+    void startNewGame(boolean AI) {
+        board = RuleEngine.copyBoard(boardStart);
+        playAI = AI;
+        whitesTurn = true;
+        xTilePrevious = 8;
+        yTilePrevious = 8;
+        currentX = 0;
+        currentY = 0;
     }
 
     void setDimensions(int width, int height) {
