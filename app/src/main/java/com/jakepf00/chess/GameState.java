@@ -7,6 +7,8 @@ import android.graphics.Rect;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+
 import static java.lang.Math.floor;
 import static java.lang.Math.min;
 
@@ -23,7 +25,7 @@ public class GameState {
     private int currentX = 0;
     private int currentY = 0;
     private boolean whitesTurn = true;
-    private boolean playAI = false;
+    private boolean playAI = true;
 
     private char[][] board = {
             {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
@@ -38,11 +40,6 @@ public class GameState {
     GameState() {
         lightPaint.setARGB(255, 255, 255, 255);
         darkPaint.setARGB(255, 0, 0, 0);
-
-        //whitesTurn = true;
-        //board = ChessAI.makeMove(board, whitesTurn);
-        //whitesTurn = !whitesTurn;
-        //board = flipBoard(board);
     }
 
     boolean update() {
@@ -78,7 +75,12 @@ public class GameState {
             if (RuleEngine.checkLegal(board, whitesTurn, move)) {
                 board = RuleEngine.makeMove(board, move);
                 if (playAI) {
-                    board = RuleEngine.flipBoard(ChessAI.makeMove(RuleEngine.flipBoard(board), !whitesTurn));
+                    board = RuleEngine.flipBoard(board);
+                    ArrayList<Move> possibleMoves = ChessAI.possibleMoves(board, !whitesTurn);
+                    if (!possibleMoves.isEmpty()) {
+                        board = RuleEngine.makeMove(board, possibleMoves.get(0));
+                    }
+                    board = RuleEngine.flipBoard(board);
                 } else {
                     board = RuleEngine.flipBoard(board);
                     whitesTurn = !whitesTurn;

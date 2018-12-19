@@ -7,7 +7,7 @@ import static java.lang.Character.isLowerCase;
 import static java.lang.Character.isUpperCase;
 
 class ChessAI {
-    static char[][] makeMove(char[][] board, boolean whitesTurn) {
+    static ArrayList<Move> possibleMoves(char[][] board, boolean whitesTurn) {
         ArrayList<Move> possibleMoves = new ArrayList<>();
         if (whitesTurn) {
             for (int i = 0; i < 8; i++) {
@@ -17,12 +17,6 @@ class ChessAI {
                             for (int l = 0; l < 8; l++) {
                                 if (RuleEngine.checkLegal(board, true, new Move(i, j, k, l))) {
                                     Move move = new Move(i, j, k, l);
-                                    char[][] boardCopy = RuleEngine.copyBoard(board);
-                                    boardCopy = RuleEngine.makeMove(boardCopy, move);
-                                    move.score -= RuleEngine.countMaterialWhite(boardCopy);
-                                    move.score += RuleEngine.countMaterialBlack(boardCopy);
-                                    move.score -= RuleEngine.boardPositionWhite(boardCopy);
-                                    move.score += RuleEngine.boardPositionBlack(boardCopy);
                                     possibleMoves.add(move);
                                 }
                             }
@@ -32,11 +26,9 @@ class ChessAI {
             }
             if (possibleMoves.size() > 0) {
                 Collections.sort(possibleMoves, new SortByScore());
-                Move move = possibleMoves.get(0);
-                board = RuleEngine.makeMove(board, move);
-                return board;
+                return possibleMoves;
             }
-            else return board;
+            else return possibleMoves;
         }
         else {
             for (int i = 0; i < 8; i++) {
@@ -46,12 +38,6 @@ class ChessAI {
                             for (int l = 0; l < 8; l++) {
                                 if (RuleEngine.checkLegal(board, false, new Move(i, j, k, l))) {
                                     Move move = new Move(i, j, k, l);
-                                    char[][] boardCopy = RuleEngine.copyBoard(board);
-                                    boardCopy = RuleEngine.makeMove(boardCopy, move);
-                                    move.score += RuleEngine.countMaterialWhite(boardCopy);
-                                    move.score -= RuleEngine.countMaterialBlack(boardCopy);
-                                    move.score += RuleEngine.boardPositionWhite(boardCopy);
-                                    move.score -= RuleEngine.boardPositionBlack(boardCopy);
                                     possibleMoves.add(move);
                                 }
                             }
@@ -61,11 +47,13 @@ class ChessAI {
             }
             if (possibleMoves.size() > 0) {
                 Collections.sort(possibleMoves, new SortByScore());
-                Move move = possibleMoves.get(0);
-                board = RuleEngine.makeMove(board, move);
-                return board;
+                return possibleMoves;
             }
-            else return board;
+            else return possibleMoves;
         }
+    }
+
+    private static Move alphaBeta(int depth, int beta, int alpha, Move move, int player) {
+        return new Move(0, 0, 0, 0);
     }
 }
