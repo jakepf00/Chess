@@ -57,6 +57,12 @@ class RuleEngine {
         boardCopy[move.x1][move.y1] = ' ';
         return boardCopy;
     }
+    static char[][] undoMove(char[][] board, Move move) {
+        char[][] boardCopy = copyBoard(board);
+        boardCopy[move.x1][move.y1] = boardCopy[move.x2][move.y2];
+        boardCopy[move.x2][move.y2] = ' ';
+        return boardCopy;
+    }
     static char[][] copyBoard(char[][] board) {
         char[][] copy = new char[8][8];
         for(int i = 0; i < board.length; i++)
