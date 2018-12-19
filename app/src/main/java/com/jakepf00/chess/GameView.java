@@ -52,4 +52,7 @@ public class GameView extends SurfaceView implements Callback {
     public void newGame(boolean playAI) {
         thread.getGameState().startNewGame(playAI);
     }
+    public void giveHint() {
+        thread.getGameState().giveHint();
+    }
 }

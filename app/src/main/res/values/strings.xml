@@ -5,4 +5,5 @@
     <string name="player_two">Player 2</string>
     <string name="play_ai">Play AI</string>
     <string name="new_game">New game</string>
+    <string name="hint_button_description">hint button</string>
 </resources>

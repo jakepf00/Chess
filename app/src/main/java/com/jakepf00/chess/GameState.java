@@ -190,6 +190,20 @@ class GameState {
         currentX = 0;
         currentY = 0;
     }
+    void giveHint() {
+        ArrayList<Move> possibleMoves = ChessAI.possibleMoves(board, !whitesTurn);
+        if (!possibleMoves.isEmpty()) {
+            Move hint = possibleMoves.get(0);
+            board = RuleEngine.makeMove(board, hint);
+            int x = hint.x1;
+            int y = hint.y1;
+            hint.x1 = hint.x2;
+            hint.y1 = hint.y2;
+            hint.x2 = x;
+            hint.y2 = y;
+            board = RuleEngine.makeMove(board, hint);
+        }
+    }
 
     void setDimensions(int width, int height) {
         screenWidth = min(width, height);
