@@ -42,11 +42,28 @@ class GameState {
     boolean keyPressed(int keyCode) {
         if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
             screenWidth += 8;
+            tileSize = screenWidth / 8;
         }
         else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
             screenWidth-= 8;
+            tileSize = screenWidth / 8;
         }
-        tileSize = screenWidth / 8;
+        else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+            if (RuleEngine.currentMove > 0) {
+                board = RuleEngine.flipBoard(board);
+                RuleEngine.currentMove--;
+                board = RuleEngine.undoMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
+                whitesTurn = !whitesTurn;
+            }
+        }
+        else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+            if (RuleEngine.currentMove < RuleEngine.gameMoves.size()) {
+                board = RuleEngine.makeMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
+                RuleEngine.currentMove++;
+                board = RuleEngine.flipBoard(board);
+                whitesTurn = !whitesTurn;
+            }
+        }
         return true;
     }
     boolean screenTouched(MotionEvent event) {
@@ -66,13 +83,17 @@ class GameState {
             double yTile = floor((event.getX()) / tileSize);
             double xTile = floor((event.getY()) / tileSize);
             Move move = new Move(xTilePrevious, yTilePrevious, (int) xTile, (int) yTile);
-            if (RuleEngine.checkLegal(board, whitesTurn, move)) {
+            if (RuleEngine.checkLegal(board, whitesTurn, move) && RuleEngine.currentMove == RuleEngine.gameMoves.size()) {
                 board = RuleEngine.makeMove(board, move);
+                RuleEngine.gameMoves.add(move);
+                RuleEngine.currentMove++;
                 if (playAI) {
                     board = RuleEngine.flipBoard(board);
                     ArrayList<Move> possibleMoves = ChessAI.possibleMoves(board, !whitesTurn);
                     if (!possibleMoves.isEmpty()) {
                         board = RuleEngine.makeMove(board, possibleMoves.get(0));
+                        RuleEngine.gameMoves.add(possibleMoves.get(0));
+                        RuleEngine.currentMove++;
                     }
                     board = RuleEngine.flipBoard(board);
                 } else {
@@ -189,6 +210,8 @@ class GameState {
         yTilePrevious = 8;
         currentX = 0;
         currentY = 0;
+        RuleEngine.currentMove = 0;
+        RuleEngine.gameMoves.clear();
     }
     void giveHint() {
         ArrayList<Move> possibleMoves = ChessAI.possibleMoves(board, !whitesTurn);

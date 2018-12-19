@@ -1,9 +1,13 @@
 package com.jakepf00.chess;
 
+import java.util.ArrayList;
+
 import static java.lang.Character.isLowerCase;
 import static java.lang.Character.isUpperCase;
 
 class RuleEngine {
+    static ArrayList<Move> gameMoves = new ArrayList<>();
+    static int currentMove = 0;
     static char[][] boardStart = {
             {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
             {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
@@ -60,7 +64,7 @@ class RuleEngine {
     static char[][] undoMove(char[][] board, Move move) {
         char[][] boardCopy = copyBoard(board);
         boardCopy[move.x1][move.y1] = boardCopy[move.x2][move.y2];
-        boardCopy[move.x2][move.y2] = ' ';
+        boardCopy[move.x2][move.y2] = move.pieceCaptured;
         return boardCopy;
     }
     static char[][] copyBoard(char[][] board) {
