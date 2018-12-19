@@ -3,4 +3,6 @@
     <string name="board_description">Where you play chess</string>
     <string name="player_one">Player 1</string>
     <string name="player_two">Player 2</string>
+    <string name="play_ai">Play AI</string>
+    <string name="new_game">New game</string>
 </resources>
