@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import static com.jakepf00.chess.RuleEngine.boardStart;
+import static com.jakepf00.chess.RuleEngine.board;
 import static java.lang.Math.floor;
 import static java.lang.Math.min;
 
@@ -27,16 +29,7 @@ class GameState {
     private boolean whitesTurn = true;
     private boolean playAI = false;
 
-    private char[][] boardStart = {
-            {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
-            {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-            {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
-            {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'}};
-    private char[][] board = RuleEngine.copyBoard(boardStart);
+
 
     GameState() {
         lightPaint.setARGB(255, 255, 255, 255);

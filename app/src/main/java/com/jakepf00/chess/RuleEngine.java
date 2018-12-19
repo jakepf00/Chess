@@ -4,6 +4,17 @@ import static java.lang.Character.isLowerCase;
 import static java.lang.Character.isUpperCase;
 
 class RuleEngine {
+    static char[][] boardStart = {
+            {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
+            {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
+            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+            {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+            {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
+            {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'}};
+    static char[][] board = RuleEngine.copyBoard(boardStart);
+
     static boolean checkLegal(char[][] board, boolean whitesTurn, Move move) {
         int x1 = move.x1;
         int y1 = move.y1;
@@ -31,7 +42,6 @@ class RuleEngine {
         // Piece specific checks
         return pieceMove(board, move);
     }
-
     static char[][] flipBoard(char[][] board) {
         char[][] newBoard = new char[8][8];
         for (int i = 0; i < 8; i++) {
@@ -41,13 +51,12 @@ class RuleEngine {
         }
         return newBoard;
     }
-
     static char[][] makeMove(char[][] board, Move move) {
-        board[move.x2][move.y2] = board[move.x1][move.y1];
-        board[move.x1][move.y1] = ' ';
-        return board;
+        char[][] boardCopy = copyBoard(board);
+        boardCopy[move.x2][move.y2] = boardCopy[move.x1][move.y1];
+        boardCopy[move.x1][move.y1] = ' ';
+        return boardCopy;
     }
-
     static char[][] copyBoard(char[][] board) {
         char[][] copy = new char[8][8];
         for(int i = 0; i < board.length; i++)
