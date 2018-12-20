@@ -205,9 +205,14 @@ class GameState {
     }
     void giveHint() {
         ArrayList<Move> possibleMoves = ChessAI.possibleMoves(board, whitesTurn);
-        if (!possibleMoves.isEmpty()) {
+        if (!possibleMoves.isEmpty() && RuleEngine.currentMove == RuleEngine.gameMoves.size()) {
             Move hint = possibleMoves.get(0);
             board = RuleEngine.makeMove(board, hint);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             board = RuleEngine.undoMove(board, hint);
         }
     }
