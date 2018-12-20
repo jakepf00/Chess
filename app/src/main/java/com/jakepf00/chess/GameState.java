@@ -204,7 +204,7 @@ class GameState {
         RuleEngine.gameMoves.clear();
     }
     void giveHint() {
-        ArrayList<Move> possibleMoves = ChessAI.possibleMoves(board, !whitesTurn);
+        ArrayList<Move> possibleMoves = ChessAI.possibleMoves(board, whitesTurn);
         if (!possibleMoves.isEmpty()) {
             Move hint = possibleMoves.get(0);
             board = RuleEngine.makeMove(board, hint);
@@ -213,18 +213,38 @@ class GameState {
     }
     void undoMove() {
         if (RuleEngine.currentMove > 0) {
-            board = RuleEngine.flipBoard(board);
-            RuleEngine.currentMove--;
-            board = RuleEngine.undoMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
-            whitesTurn = !whitesTurn;
+            if (playAI) {
+                board = RuleEngine.flipBoard(board);
+                RuleEngine.currentMove--;
+                board = RuleEngine.undoMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
+                board = RuleEngine.flipBoard(board);
+                RuleEngine.currentMove--;
+                board = RuleEngine.undoMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
+            }
+            else {
+                board = RuleEngine.flipBoard(board);
+                RuleEngine.currentMove--;
+                board = RuleEngine.undoMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
+                whitesTurn = !whitesTurn;
+            }
         }
     }
     void redoMove() {
         if (RuleEngine.currentMove < RuleEngine.gameMoves.size()) {
-            board = RuleEngine.makeMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
-            RuleEngine.currentMove++;
-            board = RuleEngine.flipBoard(board);
-            whitesTurn = !whitesTurn;
+            if (playAI) {
+                board = RuleEngine.makeMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
+                RuleEngine.currentMove++;
+                board = RuleEngine.flipBoard(board);
+                board = RuleEngine.makeMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
+                RuleEngine.currentMove++;
+                board = RuleEngine.flipBoard(board);
+            }
+            else {
+                board = RuleEngine.makeMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
+                RuleEngine.currentMove++;
+                board = RuleEngine.flipBoard(board);
+                whitesTurn = !whitesTurn;
+            }
         }
     }
 
