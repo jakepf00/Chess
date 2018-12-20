@@ -49,20 +49,10 @@ class GameState {
             tileSize = screenWidth / 8;
         }
         else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-            if (RuleEngine.currentMove > 0) {
-                board = RuleEngine.flipBoard(board);
-                RuleEngine.currentMove--;
-                board = RuleEngine.undoMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
-                whitesTurn = !whitesTurn;
-            }
+            undoMove();
         }
         else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-            if (RuleEngine.currentMove < RuleEngine.gameMoves.size()) {
-                board = RuleEngine.makeMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
-                RuleEngine.currentMove++;
-                board = RuleEngine.flipBoard(board);
-                whitesTurn = !whitesTurn;
-            }
+            redoMove();
         }
         return true;
     }
@@ -219,6 +209,22 @@ class GameState {
             Move hint = possibleMoves.get(0);
             board = RuleEngine.makeMove(board, hint);
             board = RuleEngine.undoMove(board, hint);
+        }
+    }
+    void undoMove() {
+        if (RuleEngine.currentMove > 0) {
+            board = RuleEngine.flipBoard(board);
+            RuleEngine.currentMove--;
+            board = RuleEngine.undoMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
+            whitesTurn = !whitesTurn;
+        }
+    }
+    void redoMove() {
+        if (RuleEngine.currentMove < RuleEngine.gameMoves.size()) {
+            board = RuleEngine.makeMove(board, RuleEngine.gameMoves.get(RuleEngine.currentMove));
+            RuleEngine.currentMove++;
+            board = RuleEngine.flipBoard(board);
+            whitesTurn = !whitesTurn;
         }
     }
 

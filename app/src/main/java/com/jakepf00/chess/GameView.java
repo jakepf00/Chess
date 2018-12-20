@@ -55,4 +55,10 @@ public class GameView extends SurfaceView implements Callback {
     public void giveHint() {
         thread.getGameState().giveHint();
     }
+    public void undoMove() {
+        thread.getGameState().undoMove();
+    }
+    public void redoMove() {
+        thread.getGameState().redoMove();
+    }
 }

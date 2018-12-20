@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button newGameButton;
     ImageButton hintButton;
+    ImageButton undoMoveButton;
+    ImageButton redoMoveButton;
     Switch playAISwitch;
     GameView chessGame;
     boolean playAI = false;
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
         newGameButton = findViewById(R.id.new_game_button);
         hintButton = findViewById(R.id.hint_button);
+        undoMoveButton = findViewById(R.id.undo_move_button);
+        redoMoveButton = findViewById(R.id.redo_move_button);
         playAISwitch = findViewById(R.id.ai_switch);
         chessGame = findViewById(R.id.gameView);
 
@@ -40,5 +44,11 @@ public class MainActivity extends AppCompatActivity {
     }
     public void giveHint(View v) {
         chessGame.giveHint();
+    }
+    public void undoMove(View v) {
+        chessGame.undoMove();
+    }
+    public void redoMove(View v) {
+        chessGame.redoMove();
     }
 }

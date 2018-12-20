@@ -6,4 +6,6 @@
     <string name="play_ai">Play AI</string>
     <string name="new_game">New game</string>
     <string name="hint_button_description">hint button</string>
+    <string name="undo_button_description">undo button</string>
+    <string name="redo_button_description">redo button</string>
 </resources>
